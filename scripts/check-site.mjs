@@ -1,0 +1,11 @@
+import { readFileSync, mkdirSync, copyFileSync } from 'node:fs';
+const html = readFileSync('index.html', 'utf8');
+const css = readFileSync('styles.css', 'utf8');
+const required = ['Bitdefender', 'ransomware', 'How many workstations do you plan to secure with EDR?', '#kontakt'];
+const missing = required.filter((text) => !html.includes(text));
+if (missing.length) throw new Error(`Missing required content: ${missing.join(', ')}`);
+if (!css.includes('--neon')) throw new Error('Missing Tech Armor-inspired neon palette token.');
+mkdirSync('dist', { recursive: true });
+copyFileSync('index.html', 'dist/index.html');
+copyFileSync('styles.css', 'dist/styles.css');
+console.log('Static landing page validated and copied to dist/.');
